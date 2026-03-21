@@ -1,81 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/jpg" href="./voyager_icon.jpeg">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
-    <script src="https://kit.fontawesome.com/a2e0e6ad65.js" crossorigin="anonymous"></script>
+<title>VOYAGER</title>
 
-    <title>VOYAGER</title>
+<link rel="stylesheet" href="style.css">
+
+<!-- Leaflet Map -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
+<!-- NAVBAR -->
+<nav class="navbar">
     <div class="logo">VOYA<span>GER</span></div>
 
     <div class="nav-links">
-      <button class="active"><i class="fa-solid fa-calendar"></i>Planner</button>
-      <button>Assistant</button>
-      <button>Dashboard</button>
+        <button class="active" id="plannerTab">Planner</button>
+        <button id="assistantTab">Assistant</button>
     </div>
 
-    <div class="profile">
-      <span>Traveler</span>
-    </div>
-  </nav>
+    <div class="profile">Traveler</div>
+</nav>
 
-  <!-- MAIN -->
-  <div class="container">
+<!-- MAIN -->
+<div id="plannerSection">
+<div class="container">
 
     <!-- LEFT PANEL -->
     <div class="card">
-      <h2>✈ Trip Details</h2>
+        <h2>✈ Plan Your Trip</h2>
 
-      <label>Where to?</label>
-      <input type="text" placeholder="e.g., Kyoto, Japan" />
+        <form class="trip-form">
 
-      <div class="row">
-        <label>Duration</label>
-        <span>3 Days</span>
-      </div>
-      <input type="range" min="1" max="10" value="3" />
+            <label>Destination</label>
+            <input id="destination" type="text" placeholder="e.g. Paris" required>
 
-      <label>Budget Tier</label>
-      <div class="buttons">
-        <button>Budget</button>
-        <button class="active">Moderate</button>
-        <button>Luxury</button>
-      </div>
+            <label>Duration</label>
+            <div class="range-box">
+                <input id="rangeInput" type="range" min="1" max="10" value="3">
+                <span id="durationText">3 Days</span>
+            </div>
 
-      <label>Interests (Optional)</label>
-      <textarea placeholder="e.g., Food, museums, hiking..."></textarea>
+            <label>Budget</label>
+            <div class="buttons">
+                <button type="button">Budget</button>
+                <button type="button" class="active">Moderate</button>
+                <button type="button">Luxury</button>
+            </div>
 
-      <button class="generate">Generate Itinerary</button>
+            <label>Interests</label>
+            <textarea id="interests" placeholder="Food, nature..."></textarea>
+
+            <button type="submit" class="generate">Generate ✨</button>
+        </form>
     </div>
 
     <!-- RIGHT PANEL -->
     <div class="preview">
-      <div class="box">
-        <h2>Ready to explore?</h2>
-        <p>Enter your destination and preferences on the left to generate a personalized AI itinerary.</p>
-      </div>
+
+        <div id="status" class="status"></div>
+
+        <div class="box">
+            <div id="map"></div>
+            <div id="output">
+                <h3>Your itinerary will appear here ✈️</h3>
+            </div>
+        </div>
+
     </div>
 
-  </div>
+</div>
+</div>
 
-    <script>
-  const range = document.querySelector('input[type="range"]');
-  const duration = document.querySelector('.row span');
+<!-- ASSISTANT -->
+<div id="assistantSection">
 
-  range.addEventListener('input', () => {
-    duration.textContent = range.value + " Days";
-  });
-</script>
-   
+    <div class="chat-container">
+        <div id="chatBox" class="chat-box"></div>
+
+        <div class="chat-input">
+            <input id="chatInput" placeholder="Ask travel questions...">
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="index.js"></script>
 </body>
 </html>
