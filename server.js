@@ -106,7 +106,7 @@ app.post("/generate", async (req, res) => {
 
         console.log(`\n📍 Request: ${prompt}`);
 
-        const systemPrompt = `You are a travel planner. Return ONLY a valid JSON object. No markdown, no backticks, no explanation.
+        const systemPrompt = `You are an expert travel planner. Return ONLY a valid JSON object. No markdown, no backticks, no explanation.
 
 Schema:
 {
@@ -114,19 +114,51 @@ Schema:
   "duration": "X days",
   "budgetLevel": "Budget | Moderate | Luxury",
   "highlights": ["highlight1", "highlight2", "highlight3"],
+  "budgetBreakdown": {
+    "totalEstimate": "$XXX total",
+    "perDay": "$XX/day",
+    "accommodation": "$XX/night",
+    "food": "$XX/day",
+    "transport": "$XX/day",
+    "activities": "$XX/day"
+  },
+  "transport": {
+    "international": "Flight type and estimated cost to reach destination",
+    "local": ["Local transport option 1 with cost", "Local transport option 2 with cost"]
+  },
+  "hotels": [
+    {
+      "name": "Hotel name",
+      "type": "Budget | Mid-range | Luxury",
+      "pricePerNight": "$XX/night",
+      "location": "Area/neighborhood",
+      "highlights": "Key features"
+    }
+  ],
   "itinerary": [
     {
       "day": 1,
       "theme": "Theme name",
       "morning": "Morning activity",
       "afternoon": "Afternoon activity",
-      "evening": "Evening activity"
+      "evening": "Evening activity",
+      "transport": {
+        "vehicle": "Specific vehicle for today e.g. Metro Line 1, Tuk-tuk, Rental bike, Taxi, Ferry",
+        "details": "Practical detail e.g. Take the JR Yamanote Line from Shinjuku to Ueno, cost ~$2",
+        "estimatedCost": "$X"
+      }
     }
   ]
 }
 
 User request: ${prompt}
 
+IMPORTANT RULES:
+- Each day's transport must be specific to that day's locations and activities — not generic.
+- If day 1 visits temples in Asakusa, say "Take Tokyo Metro Ginza Line to Asakusa Station".
+- If day 2 goes to the mountains, say "Rent a scooter from the city center, ~$15/day".
+- Vehicle choices must match the user's budget (e.g. budget travellers use public transit, luxury travellers use private cars/taxis).
+- Tailor ALL recommendations (hotels, transport, activities) strictly to the user's stated budget per day.
 Output ONLY the JSON object. Start with { and end with }.`;
 
         const result = await callGemini(systemPrompt);
