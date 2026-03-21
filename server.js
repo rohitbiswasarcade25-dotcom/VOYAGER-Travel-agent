@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import authRouter from "./auth.js";
 
 dotenv.config();
 
@@ -9,8 +11,17 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.GEMINI_API_KEY;
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
+
+// ── Auth routes (/auth/login, /auth/register, /auth/logout) ──
+app.use("/auth", authRouter);
+
+// ── Login page ──
+app.get("/login", (req, res) => res.sendFile("login_index.html", { root: "." }));
+app.get("/register", (req, res) => res.sendFile("register_index.html", { root: "." }));
+
 app.use(express.static("."));
 
 console.log("🔑 API Key:", API_KEY ? "Loaded ✅" : "Missing ❌");
