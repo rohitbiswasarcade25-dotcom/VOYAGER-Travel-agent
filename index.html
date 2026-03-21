@@ -8,8 +8,69 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>
-        i love you. this is me
-    </h1>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">VOYA<span>GER</span></div>
+
+    <div class="nav-links">
+      <button class="active"><i class="fa-solid fa-calendar"></i>Planner</button>
+      <button>Assistant</button>
+      <button>Dashboard</button>
+    </div>
+
+    <div class="profile">
+      <span>Traveler</span>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="container">
+
+    <!-- LEFT PANEL -->
+    <div class="card">
+      <h2>✈ Trip Details</h2>
+
+      <label>Where to?</label>
+      <input type="text" placeholder="e.g., Kyoto, Japan" />
+
+      <div class="row">
+        <label>Duration</label>
+        <span>3 Days</span>
+      </div>
+      <input type="range" min="1" max="10" value="3" />
+
+      <label>Budget Tier</label>
+      <div class="buttons">
+        <button>Budget</button>
+        <button class="active">Moderate</button>
+        <button>Luxury</button>
+      </div>
+
+      <label>Interests (Optional)</label>
+      <textarea placeholder="e.g., Food, museums, hiking..."></textarea>
+
+      <button class="generate">Generate Itinerary</button>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="preview">
+      <div class="box">
+        <h2>Ready to explore?</h2>
+        <p>Enter your destination and preferences on the left to generate a personalized AI itinerary.</p>
+      </div>
+    </div>
+
+  </div>
+
+    <script>
+  const range = document.querySelector('input[type="range"]');
+  const duration = document.querySelector('.row span');
+
+  range.addEventListener('input', () => {
+    duration.textContent = range.value + " Days";
+  });
+</script>
+   
 </body>
 </html>
